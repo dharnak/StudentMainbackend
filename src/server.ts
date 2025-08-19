@@ -5,6 +5,7 @@ import studentRoutes from './routes/studentRoutes';
 
 const app = express();
 
+
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
@@ -15,7 +16,7 @@ app.get('/', (_req, res) => {
   res.send('Hi, backend is running in Node with Sequelize');
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 sequelize.sync({ alter: true }).then(() => {
   console.log('Connected to DB and models synced');
@@ -25,3 +26,4 @@ sequelize.sync({ alter: true }).then(() => {
 }).catch((err) => {
   console.error('DB sync failed:', err);
 });
+
