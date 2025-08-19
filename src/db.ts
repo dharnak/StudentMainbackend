@@ -1,23 +1,14 @@
-import { Sequelize } from "sequelize-typescript";
-import { Student } from "./models/Student";
-import { Department } from "./models/Department";
+import { Sequelize } from 'sequelize-typescript';
+import { Student } from './models/Student';
+import { Department } from './models/Department';
 
-const connectionString =
-  process.env.DATABASE_URL ||
-  "postgres://postgres:Dharn@123@localhost:5432/demopost"; 
-
-const sequelize = new Sequelize(connectionString, {
-  dialect: "postgres",
-  dialectOptions: process.env.DATABASE_URL
-    ? {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-      }
-    : {},
+const sequelize = new Sequelize('demopost', 'postgres', 'Dharn@123', {
+  host: 'localhost',
+  port: 5432,
+  dialect: 'postgres',
   logging: false,
-  models: [Student, Department],
 });
+
+sequelize.addModels([Student, Department]);
 
 export default sequelize;
