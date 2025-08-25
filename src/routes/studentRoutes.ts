@@ -9,11 +9,41 @@ const router = express.Router();
 
 router.post('/postData', async (req, res) => {
   try {
-    const student = await Student.create(req.body); 
+    const {
+      id,
+      firstname,
+      lastname,
+      address,
+      class: studentClass,
+      busnumber,
+      fees,
+      gender,
+      departmentId,
+    } = req.body;
+
+    // ✅ Check if department exists
+    const department = await Department.findByPk(departmentId);
+    if (!department) {
+      return res.status(400).json({ error: 'Invalid departmentId' });
+    }
+
+    // ✅ Create student
+    const student = await Student.create({
+      id,
+      firstname,
+      lastname,
+      address,
+      class: studentClass,
+      busnumber,
+      fees,
+      gender,
+      departmentId,
+    });
+
     res.status(201).json({ message: 'Data inserted successfully', student });
-  } catch (error) {
-    console.error('Insert error:', error); 
-    res.status(500).json({ error: 'Insert failed' });
+  } catch (error: any) {
+    console.error('Insert error:', error);
+    res.status(500).json({ error: error.message || 'Insert failed' });
   }
 });
 
