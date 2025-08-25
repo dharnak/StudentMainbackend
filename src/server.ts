@@ -22,13 +22,10 @@ app.use(
       }
       return callback(new Error('CORS not allowed for this origin'), false);
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ include OPTIONS
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
-
-// ✅ Handle preflight requests globally
-app.options('*', cors());
 
 app.use(express.json());
 
@@ -52,4 +49,4 @@ sequelize
   })
   .catch((err) => {
     console.error('❌ DB sync failed:', err);
-  });
+  }); 
