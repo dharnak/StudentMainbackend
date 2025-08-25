@@ -9,6 +9,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3000',
   'https://student-main-m4kcfg8ey-dharneeshs-projects-37b47a50.vercel.app',
+  'https://studentmainfrontend.onrender.com',
 ];
 
 app.use(
@@ -21,10 +22,13 @@ app.use(
       }
       return callback(new Error('CORS not allowed for this origin'), false);
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ include OPTIONS
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
+// ✅ Handle preflight requests globally
+app.options('*', cors());
 
 app.use(express.json());
 
